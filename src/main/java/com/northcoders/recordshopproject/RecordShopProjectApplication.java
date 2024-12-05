@@ -1,4 +1,4 @@
-package com.northcoders.record_shop_project;
+package com.northcoders.recordshopproject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

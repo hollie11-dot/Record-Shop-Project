@@ -4,7 +4,7 @@ import com.northcoders.recordshopproject.model.Album;
 
 import java.util.List;
 
-public interface AlbumManagerService {
+public interface RecordShopService {
 
     List<Album> getAllAlbums();
 }

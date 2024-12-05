@@ -1,7 +1,7 @@
 package com.northcoders.recordshopproject.service;
 
 import com.northcoders.recordshopproject.model.Album;
-import com.northcoders.recordshopproject.repository.AlbumRepository;
+import com.northcoders.recordshopproject.repository.RecordShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AlbumManagerServiceImpl implements AlbumManagerService{
+public class RecordShopServiceImpl implements RecordShopService {
 
     @Autowired
-    AlbumRepository albumRepository;
+    RecordShopRepository recordShopRepository;
 
     @Override
     public List<Album> getAllAlbums() {
         List<Album> albumList = new ArrayList<>();
-        albumRepository.findAll().forEach(albumList::add);
+        recordShopRepository.findAll().forEach(albumList::add);
         return albumList;
     }
 }
