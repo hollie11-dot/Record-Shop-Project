@@ -30,9 +30,7 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
-
-application.properties
+.vscode
 
 ### Java ###
 # Compiled class file
@@ -91,8 +89,6 @@ replay_pid*
 .idea/**/libraries
 
 # Gradle and Maven with auto-import
-# When using Gradle or Maven with auto-import, you should exclude module files,
-# since they will be recreated, and may cause churn.  Uncomment if using
  auto-import.
  .idea/artifacts
  .idea/compiler.xml
@@ -178,3 +174,7 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+
+###Spring Profiles ###
+application-*.properties
+!application-dev.properties
