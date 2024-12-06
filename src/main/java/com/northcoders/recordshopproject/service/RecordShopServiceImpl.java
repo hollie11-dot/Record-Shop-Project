@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecordShopServiceImpl implements RecordShopService {
@@ -22,7 +23,13 @@ public class RecordShopServiceImpl implements RecordShopService {
     }
 
     @Override
-    public Album addAlbum(Album album){
-    return recordShopRepository.save(album);
+    public Album addAlbum(Album album) {
+        return recordShopRepository.save(album);
+    }
+
+    @Override
+    public Album getAlbumById(Long albumID) {
+        Optional<Album> album = recordShopRepository.findById(albumID);
+        return album.orElse(null);
     }
 }

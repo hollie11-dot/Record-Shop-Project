@@ -1,6 +1,7 @@
 package com.northcoders.recordshopproject.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -32,6 +33,16 @@ public class Album {
     public Album(){}
 
     public Album(String title, Genre genre, String artist, int dateReleased, double price, int stock) {
+        this.title = title;
+        this.genre = genre;
+        this.artist = artist;
+        this.dateReleased = dateReleased;
+        this.price = price;
+        this.stock = stock;
+    }
+
+    public Album(Long id, String title, Genre genre, String artist, int dateReleased, double price, int stock) {
+        this.id = id;
         this.title = title;
         this.genre = genre;
         this.artist = artist;

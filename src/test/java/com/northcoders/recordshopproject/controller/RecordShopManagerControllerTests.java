@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.northcoders.recordshopproject.model.Album;
 import com.northcoders.recordshopproject.model.Genre;
 import com.northcoders.recordshopproject.service.RecordShopService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,9 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -20,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.northcoders.recordshopproject.model.Album.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -91,7 +95,19 @@ public class RecordShopManagerControllerTests {
                         .andExpect(MockMvcResultMatchers.jsonPath("$.stock").value(49));
 
         verify(recordShopService, times(1)).addAlbum(any(Album.class));
+    }
 
+    @Test
+    @DisplayName("Returns album details when passed an albumID")
+    public void testGetAlbum () throws Exception{
 
+        Album expectedAlbum = new Album(1L, "AlbumOne", Genre.ROCK, "ArtistTwo", 1995, 15, 100);
+
+        when(recordShopService.getAlbumById(1L)).thenReturn(expectedAlbum);
+
+        ResponseEntity<Album> response = recordShopController.getAlbum(1L);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(expectedAlbum, response.getBody());
     }
 }
