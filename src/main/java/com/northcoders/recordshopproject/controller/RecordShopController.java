@@ -31,6 +31,12 @@ public class RecordShopController {
 
     @GetMapping("{albumID}")
     public ResponseEntity<Album> getAlbum(@PathVariable Long albumID){
-        return new ResponseEntity<>(recordShopService.getAlbumById(albumID), HttpStatus.OK);
+        return new ResponseEntity<>(recordShopService.getAlbumById(albumID).get(), HttpStatus.OK);
     }
+
+    @PostMapping("{albumID")
+    public ResponseEntity<Album> updateAlbum(@PathVariable Long albumID, @RequestBody Album album){
+        return new ResponseEntity<>(recordShopService.updateAlbum(album, albumID), HttpStatus.CREATED);
+    }
+
 }

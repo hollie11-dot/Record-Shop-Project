@@ -25,13 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.northcoders.recordshopproject.model.Album.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-public class RecordShopManagerControllerTests {
+public class RecordShopControllerTests {
 
     @Mock
     private RecordShopService recordShopService;
@@ -103,11 +102,12 @@ public class RecordShopManagerControllerTests {
 
         Album expectedAlbum = new Album(1L, "AlbumOne", Genre.ROCK, "ArtistTwo", 1995, 15, 100);
 
-        when(recordShopService.getAlbumById(1L)).thenReturn(expectedAlbum);
+        when(recordShopService.getAlbumById(1L)).thenReturn(Optional.of(expectedAlbum));
 
         ResponseEntity<Album> response = recordShopController.getAlbum(1L);
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(expectedAlbum, response.getBody());
     }
+
 }

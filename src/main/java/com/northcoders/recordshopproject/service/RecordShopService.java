@@ -9,5 +9,6 @@ public interface RecordShopService {
 
     List<Album> getAllAlbums();
     Album addAlbum(Album album);
-    Album getAlbumById(Long albumID);
+    Optional<Album> getAlbumById(Long albumID);
+    Album updateAlbum(Album album, Long albumID);
 }

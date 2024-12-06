@@ -28,8 +28,18 @@ public class RecordShopServiceImpl implements RecordShopService {
     }
 
     @Override
-    public Album getAlbumById(Long albumID) {
-        Optional<Album> album = recordShopRepository.findById(albumID);
-        return album.orElse(null);
+    public Optional<Album> getAlbumById(Long albumID) {
+        return recordShopRepository.findById(albumID);
+    }
+
+    @Override
+    public Album updateAlbum (Album album, Long albumID){
+        Album albumToUpdate = recordShopRepository.findById(albumID).get();
+        albumToUpdate.setArtist(album.getArtist());
+        albumToUpdate.setGenre(album.getGenre());
+        albumToUpdate.setDateReleased(album.getDateReleased());
+        albumToUpdate.setPrice(album.getPrice());
+        albumToUpdate.setStock(album.getStock());
+        return recordShopRepository.save(albumToUpdate);
     }
 }
