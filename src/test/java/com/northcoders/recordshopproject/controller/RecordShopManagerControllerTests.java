@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -21,7 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.northcoders.recordshopproject.model.Album.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -36,7 +38,7 @@ public class RecordShopManagerControllerTests {
     @Autowired
     private MockMvc mockMvc;
 
-    private ObjectMapper mapper;
+    private ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     public void setup(){
@@ -49,7 +51,6 @@ public class RecordShopManagerControllerTests {
         List<Album> testAlbums = new ArrayList<>();
 
         Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100);
-
         Album albumTwo= new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19);
 
         testAlbums.add(albumOne);
@@ -68,7 +69,28 @@ public class RecordShopManagerControllerTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].artist").value("Miles Davis"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].dateReleased").value(1959))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].genre").value("JAZZ"));
+    }
 
+    @Test
+    @DisplayName("Returns posted album when receives a post request")
+    public void testAddAlbum() throws Exception{
+        Album albumOne = new Album("Teenage Dream",Genre.POP, "Katy Perry", 2010, 20, 49);
+
+        when(recordShopService.addAlbum(any(Album.class))).thenReturn(albumOne);
+
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/v1/recordshop")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(albumOne)))
+                        .andExpect(MockMvcResultMatchers.status().isCreated())
+                        .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Teenage Dream"))
+                        .andExpect(MockMvcResultMatchers.jsonPath("$.genre").value("POP"))
+                        .andExpect(MockMvcResultMatchers.jsonPath("$.artist").value("Katy Perry"))
+                        .andExpect(MockMvcResultMatchers.jsonPath("$.dateReleased").value(2010))
+                        .andExpect(MockMvcResultMatchers.jsonPath("$.price").value(20))
+                        .andExpect(MockMvcResultMatchers.jsonPath("$.stock").value(49));
+
+        verify(recordShopService, times(1)).addAlbum(any(Album.class));
 
 
     }

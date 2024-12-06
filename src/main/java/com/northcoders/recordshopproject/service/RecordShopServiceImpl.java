@@ -20,4 +20,9 @@ public class RecordShopServiceImpl implements RecordShopService {
         recordShopRepository.findAll().forEach(albumList::add);
         return albumList;
     }
+
+    @Override
+    public Album addAlbum(Album album){
+    return recordShopRepository.save(album);
+    }
 }
