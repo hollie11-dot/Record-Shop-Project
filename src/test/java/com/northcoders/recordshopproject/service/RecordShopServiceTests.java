@@ -41,4 +41,17 @@ public class RecordShopServiceTests {
         assertThat(actualResult).hasSize(3);
         assertThat(actualResult).isEqualTo(albums);
     }
+
+    @Test
+    @DisplayName("addAlbum() adds an album to the repository")
+
+    public void testAddAlbum(){
+        Album album = new Album("Alum One", Genre.DANCE, "Atist One", 2020, 11, 40);
+
+        when(mockRecordShopRepository.save(album)).thenReturn(album);
+
+        Album actualResult = mockRecordShopService.addAlbum(album);
+
+        assertThat(actualResult).isEqualTo(album);
+    }
 }
