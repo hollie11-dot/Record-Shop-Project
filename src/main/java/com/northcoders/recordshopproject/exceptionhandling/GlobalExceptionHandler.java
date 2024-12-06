@@ -10,8 +10,8 @@ import java.util.NoSuchElementException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<Object> handleItemNoSuchElementException(NoSuchElementException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    @ExceptionHandler
+    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException e) {
+        return new ResponseEntity<>("There is no such element", HttpStatus.NOT_FOUND);
     }
 }
