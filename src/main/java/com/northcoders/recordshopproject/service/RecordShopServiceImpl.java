@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class RecordShopServiceImpl implements RecordShopService {
+public class    RecordShopServiceImpl implements RecordShopService {
 
     @Autowired
     RecordShopRepository recordShopRepository;
@@ -28,18 +29,9 @@ public class RecordShopServiceImpl implements RecordShopService {
     }
 
     @Override
-    public Optional<Album> getAlbumById(Long albumID) {
-        return recordShopRepository.findById(albumID);
+    public Album getAlbumById(Long albumID) {
+        return recordShopRepository.findById(albumID)
+                .orElseThrow(NoSuchElementException::new);
     }
 
-    @Override
-    public Album updateAlbum (Album album, Long albumID){
-        Album albumToUpdate = recordShopRepository.findById(albumID).get();
-        albumToUpdate.setArtist(album.getArtist());
-        albumToUpdate.setGenre(album.getGenre());
-        albumToUpdate.setDateReleased(album.getDateReleased());
-        albumToUpdate.setPrice(album.getPrice());
-        albumToUpdate.setStock(album.getStock());
-        return recordShopRepository.save(albumToUpdate);
-    }
 }
