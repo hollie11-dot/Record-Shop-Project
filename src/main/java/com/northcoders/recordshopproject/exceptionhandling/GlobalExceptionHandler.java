@@ -12,6 +12,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException e) {
-        return new ResponseEntity<>("There is no such element", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("There is no such element, please try again", HttpStatus.NOT_FOUND);
     }
 }
