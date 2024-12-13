@@ -44,7 +44,7 @@ public class RecordShopServiceTests {
     }
 
     @Test
-    @DisplayName("addAlbum() adds an album to the repository")
+    @DisplayName("addAlbum() adds an album")
 
     public void testAddAlbum(){
         Album album = new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40);
@@ -65,7 +65,7 @@ public class RecordShopServiceTests {
 
         when(mockRecordShopRepository.findById(id)).thenReturn(Optional.of(album));
 
-        Album actualResult = mockRecordShopService.getAlbumById(id).get();
+        Album actualResult = mockRecordShopService.getAlbumById(id);
 
         assertThat(actualResult).isEqualTo(album);
     }
