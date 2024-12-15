@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 @DataJpaTest
 public class RecordShopServiceTests {
@@ -68,5 +69,24 @@ public class RecordShopServiceTests {
         Album actualResult = mockRecordShopService.getAlbumById(id);
 
         assertThat(actualResult).isEqualTo(album);
+    }
+
+    @Test
+    @DisplayName("updateAlbum returns an updated album when passed an albumID and an Album")
+    public void testUpdateAlbum(){
+        Album testAlbum = new Album(1L,"Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 100);
+
+        when(mockRecordShopRepository.findById(1L)).thenReturn(Optional.of(testAlbum));
+        when(mockRecordShopRepository.save(any(Album.class))).thenReturn(testAlbum);
+
+        Album actualResult = mockRecordShopService.updateAlbum(testAlbum, 1L);
+
+        Assertions.assertNotNull(actualResult);
+        Assertions.assertEquals(1L, actualResult.getId());
+        Assertions.assertEquals("Nevermind", actualResult.getTitle());
+        Assertions.assertEquals(Genre.ROCK, actualResult.getGenre());
+
+        verify(mockRecordShopRepository, times(1)).findById(1L);
+
     }
 }
