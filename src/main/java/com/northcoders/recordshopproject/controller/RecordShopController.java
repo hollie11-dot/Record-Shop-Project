@@ -39,5 +39,10 @@ public class RecordShopController {
         return new ResponseEntity<>(recordShopService.updateAlbum(album, albumID), HttpStatus.CREATED);
     }
 
+    @DeleteMapping("{albumID}")
+    public ResponseEntity<String> deleteAlbum(@PathVariable Long albumID){
+        recordShopService.deleteAlbum(albumID);
+        return new ResponseEntity<>(String.format("Album at ID %d has been successfully deleted", albumID), HttpStatus.ACCEPTED);
+    }
 
 }

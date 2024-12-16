@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -27,6 +29,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -128,16 +131,6 @@ public class RecordShopControllerTests {
         Assertions.assertEquals(1991, response.getBody().getDateReleased());
         Assertions.assertEquals(Genre.ROCK, response.getBody().getGenre());
         Assertions.assertEquals("Nevermind", response.getBody().getTitle());
-
-//        this.mockMvc.perform(
-//                        MockMvcRequestBuilders.put("/api/v1/recordshop/{albumID}")
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(mapper.writeValueAsString(updatedAlbum)))
-//                .andExpect(status().isCreated())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Nevermind"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.genre").value(updatedAlbum.getGenre().toString()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.dateReleased").value(updatedAlbum.getDateReleased()));
-
     }
 
 }

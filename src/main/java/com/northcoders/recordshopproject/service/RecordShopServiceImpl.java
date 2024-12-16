@@ -49,5 +49,14 @@ public class    RecordShopServiceImpl implements RecordShopService {
         return recordShopRepository.save(albumToUpdate);
     }
 
+    @Override
+    public void deleteAlbum(Long albumID){
+        if(recordShopRepository.existsById(albumID)){
+            recordShopRepository.deleteById(albumID);
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
+
 
 }
