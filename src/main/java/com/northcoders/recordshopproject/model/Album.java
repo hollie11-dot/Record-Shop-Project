@@ -1,9 +1,6 @@
 package com.northcoders.recordshopproject.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
 
 @Entity
 public class Album {
