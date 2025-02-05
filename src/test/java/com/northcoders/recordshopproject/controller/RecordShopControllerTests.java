@@ -133,4 +133,17 @@ public class RecordShopControllerTests {
         Assertions.assertEquals("Nevermind", response.getBody().getTitle());
     }
 
+    @Test
+    @DisplayName("Deletes an album when passed an ID")
+    public void testDeleteAlbum() throws Exception {
+     doNothing().when(recordShopService).deleteAlbum(1L);
+
+     this.mockMvc.perform(
+             MockMvcRequestBuilders.delete("/api/v1/recordshop/1"))
+                .andExpect(status().isAccepted())
+                .andExpect(MockMvcResultMatchers.content().string("Album at ID 1 has been successfully deleted"));
+
+        verify(recordShopService, times(1)).deleteAlbum(1L);
+    }
+
 }

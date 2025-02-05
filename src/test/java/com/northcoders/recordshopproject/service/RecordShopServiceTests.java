@@ -89,4 +89,17 @@ public class RecordShopServiceTests {
         verify(mockRecordShopRepository, times(1)).findById(1L);
 
     }
+
+    @Test
+    @DisplayName("deleteAlbum deletes album when passed an albumID")
+    public void testDeleteAlbum(){
+    Album testAlbum = new Album();
+    testAlbum.setId(1L);
+
+    when(mockRecordShopRepository.findById(1L)).thenReturn(Optional.of(testAlbum));
+
+    mockRecordShopRepository.deleteById(1L);
+
+    verify(mockRecordShopRepository, times(1)).deleteById(1L);
+    }
 }
