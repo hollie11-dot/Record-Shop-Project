@@ -3,6 +3,7 @@ package com.northcoders.recordshopproject.controller;
 import com.northcoders.recordshopproject.model.Album;
 import com.northcoders.recordshopproject.service.RecordShopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,12 @@ public class RecordShopController {
     public ResponseEntity<String> deleteAlbum(@PathVariable Long albumID){
         recordShopService.deleteAlbum(albumID);
         return new ResponseEntity<>(String.format("Album at ID %d has been successfully deleted", albumID), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping(value = "/artist/{artist}")
+    public ResponseEntity<List<Album>> getAlbumByArtist(@PathVariable String artist){
+        List<Album> albumsByArtist = recordShopService.getAlbumByArtist(artist);
+        return new ResponseEntity<>(albumsByArtist, HttpStatus.OK);
     }
 
 }

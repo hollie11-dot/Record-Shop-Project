@@ -3,7 +3,6 @@ package com.northcoders.recordshopproject.service;
 import com.northcoders.recordshopproject.model.Album;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface RecordShopService {
 
@@ -11,6 +10,6 @@ public interface RecordShopService {
     Album addAlbum(Album album);
     Album getAlbumById(Long albumID);
     Album updateAlbum(Album album, Long albumID);
-
     void deleteAlbum(Long albumID);
+    List<Album> getAlbumByArtist(String artist);
 }
