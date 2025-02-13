@@ -20,9 +20,13 @@ public class RecordShopServiceImpl implements RecordShopService {
     RecordShopRepository recordShopRepository;
 
     @Override
-    public List<Album> getAllAlbums() {
+    public List<Album> getAllAlbums(String artist) {
         List<Album> albumList = new ArrayList<>();
-        recordShopRepository.findAll().forEach(albumList::add);
+        if(artist != null){
+            albumList.addAll(recordShopRepository.findByArtist(artist));
+        }
+        else {
+        recordShopRepository.findAll().forEach(albumList::add); }
         return albumList;
     }
 
@@ -58,11 +62,6 @@ public class RecordShopServiceImpl implements RecordShopService {
         } else {
             throw new NoSuchElementException();
         }
-    }
-
-    @Override
-    public List<Album> getAlbumByArtist(String artist) {
-        return recordShopRepository.findByArtist(artist);
     }
 
 }

@@ -20,8 +20,10 @@ public class RecordShopController {
     private RecordShopService recordShopService;
 
     @GetMapping
-    public ResponseEntity<List<Album>> getAllAlbums(){
-        return new ResponseEntity<>(recordShopService.getAllAlbums(), HttpStatus.OK);
+    public ResponseEntity<List<Album>> getAllAlbums(
+            @RequestParam(value = "artist", required = false) String artist
+    ){
+        return new ResponseEntity<>(recordShopService.getAllAlbums(artist), HttpStatus.OK);
     }
 
     @PostMapping
@@ -44,12 +46,6 @@ public class RecordShopController {
     public ResponseEntity<String> deleteAlbum(@PathVariable Long albumID){
         recordShopService.deleteAlbum(albumID);
         return new ResponseEntity<>(String.format("Album at ID %d has been successfully deleted", albumID), HttpStatus.ACCEPTED);
-    }
-
-    @GetMapping(value = "/artist/{artist}")
-    public ResponseEntity<List<Album>> getAlbumByArtist(@PathVariable String artist){
-        List<Album> albumsByArtist = recordShopService.getAlbumByArtist(artist);
-        return new ResponseEntity<>(albumsByArtist, HttpStatus.OK);
     }
 
 }

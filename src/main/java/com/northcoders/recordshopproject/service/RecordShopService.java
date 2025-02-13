@@ -6,10 +6,9 @@ import java.util.List;
 
 public interface RecordShopService {
 
-    List<Album> getAllAlbums();
+    List<Album> getAllAlbums(String artist);
     Album addAlbum(Album album);
     Album getAlbumById(Long albumID);
     Album updateAlbum(Album album, Long albumID);
     void deleteAlbum(Long albumID);
-    List<Album> getAlbumByArtist(String artist);
 }

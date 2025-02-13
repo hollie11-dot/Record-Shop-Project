@@ -24,8 +24,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -64,7 +66,7 @@ public class RecordShopControllerTests {
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
 
-        when(recordShopService.getAllAlbums()).thenReturn(testAlbums);
+        when(recordShopService.getAllAlbums(null)).thenReturn(testAlbums);
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/v1/recordshop"))
@@ -146,4 +148,22 @@ public class RecordShopControllerTests {
         verify(recordShopService, times(1)).deleteAlbum(1L);
     }
 
+    @Test
+    @DisplayName("Returns albums by artist when passed an artist")
+    public void testGetAllAlbumsWithArtist() throws Exception {
+        List<Album> testAlbums = new ArrayList<>();
+
+        Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100);
+        Album albumTwo = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19);
+
+        testAlbums.add(albumOne);
+        testAlbums.add(albumTwo);
+
+        when(recordShopService.getAllAlbums("Nirvana")).thenReturn(List.of(albumOne));
+
+        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums("Nirvana");
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(List.of(albumOne), response.getBody());
+    }
 }
