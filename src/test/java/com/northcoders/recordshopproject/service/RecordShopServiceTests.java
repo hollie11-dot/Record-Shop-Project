@@ -38,7 +38,7 @@ public class RecordShopServiceTests {
 
         when(mockRecordShopRepository.findAll()).thenReturn(albums);
 
-        List<Album> actualResult = mockRecordShopService.getAllAlbums();
+        List<Album> actualResult = mockRecordShopService.getAllAlbums(null);
 
         assertThat(actualResult).hasSize(3);
         assertThat(actualResult).isEqualTo(albums);
@@ -101,5 +101,26 @@ public class RecordShopServiceTests {
     mockRecordShopRepository.deleteById(1L);
 
     verify(mockRecordShopRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    @DisplayName("getAllAlbums(artist) returns a list of albums by passed artist")
+    public void testGetAllAlbumsByArtist(){
+
+        List<Album> albums = new ArrayList<>();
+        Album albumOne = new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40);
+        Album albumTwo = new Album("Alum Two", Genre.DANCE, "Artist One", 2000, 15, 50);
+        Album albumThree = new Album("Alum Three", Genre.DANCE, "Artist Two", 1952, 30, 10);
+
+        albums.add(albumOne);
+        albums.add(albumTwo);
+        albums.add(albumThree);
+
+        when(mockRecordShopRepository.findByArtist("Artist One")).thenReturn(List.of(albumOne, albumTwo));
+
+        List<Album> actualResult = mockRecordShopService.getAllAlbums("Artist One");
+
+        assertThat(actualResult).hasSize(2);
+        assertThat(actualResult).isEqualTo(List.of(albumOne, albumTwo));
     }
 }
