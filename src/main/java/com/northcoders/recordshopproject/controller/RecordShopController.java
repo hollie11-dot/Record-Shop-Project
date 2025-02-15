@@ -22,9 +22,10 @@ public class RecordShopController {
     @GetMapping
     public ResponseEntity<List<Album>> getAllAlbums(
             @RequestParam(value = "artist", required = false) String artist,
-            @RequestParam(value = "year", required = false) Integer year
+            @RequestParam(value = "year", required = false) Integer year,
+            @RequestParam(value = "genre", required = false) String genre
     ){
-        return new ResponseEntity<>(recordShopService.getAllAlbums(artist, year), HttpStatus.OK);
+        return new ResponseEntity<>(recordShopService.getAllAlbums(artist, year, genre), HttpStatus.OK);
     }
 
     @PostMapping

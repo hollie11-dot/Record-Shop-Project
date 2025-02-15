@@ -10,4 +10,5 @@ import java.util.List;
 public interface RecordShopRepository extends CrudRepository<Album, Long> {
     List<Album> findByArtist (String artist);
     List<Album> findByDateReleased (Integer year);
+    List<Album> findByGenre (String genre);
 }

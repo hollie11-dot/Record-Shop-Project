@@ -66,7 +66,7 @@ public class RecordShopControllerTests {
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
 
-        when(recordShopService.getAllAlbums(null, null)).thenReturn(testAlbums);
+        when(recordShopService.getAllAlbums(null, null, null)).thenReturn(testAlbums);
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/v1/recordshop"))
@@ -159,9 +159,9 @@ public class RecordShopControllerTests {
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
 
-        when(recordShopService.getAllAlbums("Nirvana", null)).thenReturn(List.of(albumOne));
+        when(recordShopService.getAllAlbums("Nirvana", null, null)).thenReturn(List.of(albumOne));
 
-        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums("Nirvana", null);
+        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums("Nirvana", null, null);
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(List.of(albumOne), response.getBody());
@@ -178,9 +178,28 @@ public class RecordShopControllerTests {
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
 
-        when(recordShopService.getAllAlbums(null, 1991)).thenReturn(List.of(albumOne));
+        when(recordShopService.getAllAlbums(null, 1991, null)).thenReturn(List.of(albumOne));
 
-        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums(null, 1991);
+        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums(null, 1991, null);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(List.of(albumOne), response.getBody());
+    }
+
+    @Test
+    @DisplayName("Returns albums by genre when passed a genre")
+    public void testGetAllAlbumsWithGenre() throws Exception {
+        List<Album> testAlbums = new ArrayList<>();
+
+        Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100);
+        Album albumTwo = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19);
+
+        testAlbums.add(albumOne);
+        testAlbums.add(albumTwo);
+
+        when(recordShopService.getAllAlbums(null, null, "ROCK")).thenReturn(List.of(albumOne));
+
+        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums(null, null, "ROCK");
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(List.of(albumOne), response.getBody());
