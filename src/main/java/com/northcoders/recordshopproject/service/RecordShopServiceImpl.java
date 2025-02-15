@@ -20,10 +20,13 @@ public class RecordShopServiceImpl implements RecordShopService {
     RecordShopRepository recordShopRepository;
 
     @Override
-    public List<Album> getAllAlbums(String artist) {
+    public List<Album> getAllAlbums(String artist, Integer year) {
         List<Album> albumList = new ArrayList<>();
         if(artist != null){
             albumList.addAll(recordShopRepository.findByArtist(artist));
+        }
+        else if(year != null){
+            albumList.addAll(recordShopRepository.findByDateReleased(year));
         }
         else {
         recordShopRepository.findAll().forEach(albumList::add); }

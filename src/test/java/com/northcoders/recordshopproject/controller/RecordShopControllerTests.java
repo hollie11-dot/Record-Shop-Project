@@ -66,7 +66,7 @@ public class RecordShopControllerTests {
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
 
-        when(recordShopService.getAllAlbums(null)).thenReturn(testAlbums);
+        when(recordShopService.getAllAlbums(null, null)).thenReturn(testAlbums);
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/v1/recordshop"))
@@ -159,9 +159,28 @@ public class RecordShopControllerTests {
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
 
-        when(recordShopService.getAllAlbums("Nirvana")).thenReturn(List.of(albumOne));
+        when(recordShopService.getAllAlbums("Nirvana", null)).thenReturn(List.of(albumOne));
 
-        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums("Nirvana");
+        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums("Nirvana", null);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assertions.assertEquals(List.of(albumOne), response.getBody());
+    }
+
+    @Test
+    @DisplayName("Returns albums by release year when passed a year")
+    public void testGetAllAlbumsWithReleaseYear() throws Exception {
+        List<Album> testAlbums = new ArrayList<>();
+
+        Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100);
+        Album albumTwo = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19);
+
+        testAlbums.add(albumOne);
+        testAlbums.add(albumTwo);
+
+        when(recordShopService.getAllAlbums(null, 1991)).thenReturn(List.of(albumOne));
+
+        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums(null, 1991);
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(List.of(albumOne), response.getBody());

@@ -38,7 +38,7 @@ public class RecordShopServiceTests {
 
         when(mockRecordShopRepository.findAll()).thenReturn(albums);
 
-        List<Album> actualResult = mockRecordShopService.getAllAlbums(null);
+        List<Album> actualResult = mockRecordShopService.getAllAlbums(null, null);
 
         assertThat(actualResult).hasSize(3);
         assertThat(actualResult).isEqualTo(albums);
@@ -118,7 +118,28 @@ public class RecordShopServiceTests {
 
         when(mockRecordShopRepository.findByArtist("Artist One")).thenReturn(List.of(albumOne, albumTwo));
 
-        List<Album> actualResult = mockRecordShopService.getAllAlbums("Artist One");
+        List<Album> actualResult = mockRecordShopService.getAllAlbums("Artist One", null);
+
+        assertThat(actualResult).hasSize(2);
+        assertThat(actualResult).isEqualTo(List.of(albumOne, albumTwo));
+    }
+
+    @Test
+    @DisplayName("getAllAlbums(artist) returns a list of albums by passed artist")
+    public void testGetAllAlbumsByReleaseYear(){
+
+        List<Album> albums = new ArrayList<>();
+        Album albumOne = new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40);
+        Album albumTwo = new Album("Alum Two", Genre.DANCE, "Artist Two", 2020, 15, 50);
+        Album albumThree = new Album("Alum Three", Genre.DANCE, "Artist Three", 1952, 30, 10);
+
+        albums.add(albumOne);
+        albums.add(albumTwo);
+        albums.add(albumThree);
+
+        when(mockRecordShopRepository.findByDateReleased(2020)).thenReturn(List.of(albumOne, albumTwo));
+
+        List<Album> actualResult = mockRecordShopService.getAllAlbums(null, 2020);
 
         assertThat(actualResult).hasSize(2);
         assertThat(actualResult).isEqualTo(List.of(albumOne, albumTwo));
