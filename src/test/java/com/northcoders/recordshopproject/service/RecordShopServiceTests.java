@@ -158,9 +158,9 @@ public class RecordShopServiceTests {
         albums.add(albumTwo);
         albums.add(albumThree);
 
-        when(mockRecordShopRepository.findByDateReleased(2020)).thenReturn(List.of(albumOne, albumTwo));
+        when(mockRecordShopRepository.findByGenre(Genre.valueOf("DANCE"))).thenReturn(List.of(albumOne, albumTwo));
 
-        List<Album> actualResult = mockRecordShopService.getAllAlbums(null, null, "DANCE");
+        List<Album> actualResult = mockRecordShopService.getAllAlbums(null, null, Genre.valueOf("DANCE"));
 
         assertThat(actualResult).hasSize(2);
         assertThat(actualResult).isEqualTo(List.of(albumOne, albumTwo));

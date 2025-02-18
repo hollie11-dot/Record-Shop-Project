@@ -1,6 +1,7 @@
 package com.northcoders.recordshopproject.service;
 
 import com.northcoders.recordshopproject.model.Album;
+import com.northcoders.recordshopproject.model.Genre;
 import com.northcoders.recordshopproject.repository.RecordShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -20,7 +21,7 @@ public class RecordShopServiceImpl implements RecordShopService {
     RecordShopRepository recordShopRepository;
 
     @Override
-    public List<Album> getAllAlbums(String artist, Integer year, String genre) {
+    public List<Album> getAllAlbums(String artist, Integer year, Genre genre) {
         List<Album> albumList = new ArrayList<>();
         if(artist != null){
             albumList.addAll(recordShopRepository.findByArtist(artist));

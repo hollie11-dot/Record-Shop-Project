@@ -197,7 +197,7 @@ public class RecordShopControllerTests {
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
 
-        when(recordShopService.getAllAlbums(null, null, "ROCK")).thenReturn(List.of(albumOne));
+        when(recordShopService.getAllAlbums(null, null, Genre.valueOf("ROCK"))).thenReturn(List.of(albumOne));
 
         ResponseEntity<List<Album>> response = recordShopController.getAllAlbums(null, null, "ROCK");
 

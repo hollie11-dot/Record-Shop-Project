@@ -12,6 +12,7 @@ public class Album {
     @Column
     private String title;
 
+    @Enumerated(EnumType.STRING)
     @Column
     private Genre genre;
 

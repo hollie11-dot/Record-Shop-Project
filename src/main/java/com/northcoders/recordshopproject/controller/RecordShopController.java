@@ -1,6 +1,7 @@
 package com.northcoders.recordshopproject.controller;
 
 import com.northcoders.recordshopproject.model.Album;
+import com.northcoders.recordshopproject.model.Genre;
 import com.northcoders.recordshopproject.service.RecordShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -25,7 +26,8 @@ public class RecordShopController {
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "genre", required = false) String genre
     ){
-        return new ResponseEntity<>(recordShopService.getAllAlbums(artist, year, genre), HttpStatus.OK);
+        Genre stringToGenre = Genre.valueOf(genre);
+        return new ResponseEntity<>(recordShopService.getAllAlbums(artist, year, stringToGenre), HttpStatus.OK);
     }
 
     @PostMapping
