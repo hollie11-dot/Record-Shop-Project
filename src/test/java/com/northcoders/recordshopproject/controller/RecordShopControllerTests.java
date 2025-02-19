@@ -66,7 +66,7 @@ public class RecordShopControllerTests {
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
 
-        when(recordShopService.getAllAlbums(null, null, null)).thenReturn(testAlbums);
+        when(recordShopService.getAllAlbums()).thenReturn(testAlbums);
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/v1/recordshop"))
@@ -150,7 +150,7 @@ public class RecordShopControllerTests {
 
     @Test
     @DisplayName("Returns albums by artist when passed an artist")
-    public void testGetAllAlbumsWithArtist() throws Exception {
+    public void testFilterALbumsWithArtist() throws Exception {
         List<Album> testAlbums = new ArrayList<>();
 
         Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100);
@@ -159,9 +159,9 @@ public class RecordShopControllerTests {
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
 
-        when(recordShopService.getAllAlbums("Nirvana", null, null)).thenReturn(List.of(albumOne));
+        when(recordShopService.filterAlbums("Nirvana", null, null)).thenReturn(List.of(albumOne));
 
-        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums("Nirvana", null, null);
+        ResponseEntity<List<Album>> response = recordShopController.filterAlbums("Nirvana", null, null);
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(List.of(albumOne), response.getBody());
@@ -169,7 +169,7 @@ public class RecordShopControllerTests {
 
     @Test
     @DisplayName("Returns albums by release year when passed a year")
-    public void testGetAllAlbumsWithReleaseYear() throws Exception {
+    public void testFilterAlbumsWithReleaseYear() throws Exception {
         List<Album> testAlbums = new ArrayList<>();
 
         Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100);
@@ -178,9 +178,9 @@ public class RecordShopControllerTests {
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
 
-        when(recordShopService.getAllAlbums(null, 1991, null)).thenReturn(List.of(albumOne));
+        when(recordShopService.filterAlbums(null, 1991, null)).thenReturn(List.of(albumOne));
 
-        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums(null, 1991, null);
+        ResponseEntity<List<Album>> response = recordShopController.filterAlbums(null, 1991, null);
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(List.of(albumOne), response.getBody());
@@ -188,7 +188,7 @@ public class RecordShopControllerTests {
 
     @Test
     @DisplayName("Returns albums by genre when passed a genre")
-    public void testGetAllAlbumsWithGenre() throws Exception {
+    public void testFilterAlbumsWithGenre() throws Exception {
         List<Album> testAlbums = new ArrayList<>();
 
         Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100);
@@ -197,9 +197,9 @@ public class RecordShopControllerTests {
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
 
-        when(recordShopService.getAllAlbums(null, null, Genre.valueOf("ROCK"))).thenReturn(List.of(albumOne));
+        when(recordShopService.filterAlbums(null, null, Genre.valueOf("ROCK"))).thenReturn(List.of(albumOne));
 
-        ResponseEntity<List<Album>> response = recordShopController.getAllAlbums(null, null, "ROCK");
+        ResponseEntity<List<Album>> response = recordShopController.filterAlbums(null, null, Genre.valueOf("ROCK"));
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(List.of(albumOne), response.getBody());
