@@ -21,19 +21,9 @@ public class RecordShopServiceImpl implements RecordShopService {
     RecordShopRepository recordShopRepository;
 
     @Override
-    public List<Album> getAllAlbums(String artist, Integer year, Genre genre) {
+    public List<Album> getAllAlbums() {
         List<Album> albumList = new ArrayList<>();
-        if(artist != null){
-            albumList.addAll(recordShopRepository.findByArtist(artist));
-        }
-        else if(year != null){
-            albumList.addAll(recordShopRepository.findByDateReleased(year));
-        }
-        else if(genre != null){
-            albumList.addAll(recordShopRepository.findByGenre(genre));
-        }
-        else {
-        recordShopRepository.findAll().forEach(albumList::add); }
+        recordShopRepository.findAll().forEach(albumList::add);
         return albumList;
     }
 
@@ -50,8 +40,8 @@ public class RecordShopServiceImpl implements RecordShopService {
     }
 
     @Override
-    @CacheEvict(cacheNames = "albums", key= "#albumID")
-    public Album updateAlbum(Album album, Long albumID){
+    @CacheEvict(cacheNames = "albums", key = "#albumID")
+    public Album updateAlbum(Album album, Long albumID) {
         Album albumToUpdate = recordShopRepository.findById(albumID).get();
         albumToUpdate.setTitle(album.getTitle());
         albumToUpdate.setGenre(album.getGenre());
@@ -63,12 +53,27 @@ public class RecordShopServiceImpl implements RecordShopService {
     }
 
     @Override
-    public void deleteAlbum(Long albumID){
-        if(recordShopRepository.existsById(albumID)){
+    public void deleteAlbum(Long albumID) {
+        if (recordShopRepository.existsById(albumID)) {
             recordShopRepository.deleteById(albumID);
         } else {
             throw new NoSuchElementException();
         }
     }
 
+    @Override
+    public List<Album> filterAlbums(String artist, Integer year, Genre genre) {
+        List<Album> albumList = new ArrayList<>();
+        if (artist != null) {
+            albumList.addAll(recordShopRepository.findByArtist(artist));
+        } else if (year != null) {
+            albumList.addAll(recordShopRepository.findByDateReleased(year));
+        } else if (genre != null) {
+            albumList.addAll(recordShopRepository.findByGenre(genre));
+        }
+        if(albumList.isEmpty()){
+            throw new NoSuchElementException();
+        }
+        return albumList;
+    }
 }

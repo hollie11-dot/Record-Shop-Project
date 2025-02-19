@@ -7,9 +7,10 @@ import java.util.List;
 
 public interface RecordShopService {
 
-    List<Album> getAllAlbums(String artist, Integer year, Genre genre);
+    List<Album> getAllAlbums();
     Album addAlbum(Album album);
     Album getAlbumById(Long albumID);
     Album updateAlbum(Album album, Long albumID);
     void deleteAlbum(Long albumID);
+    List<Album> filterAlbums(String artist, Integer year, Genre genre);
 }
