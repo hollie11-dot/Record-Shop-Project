@@ -1,5 +1,6 @@
 package com.northcoders.recordshopproject.service;
 
+import com.northcoders.recordshopproject.exceptionhandling.AlbumNotFoundException;
 import com.northcoders.recordshopproject.exceptionhandling.InvalidInputsException;
 import com.northcoders.recordshopproject.model.Album;
 import com.northcoders.recordshopproject.model.Genre;
@@ -62,7 +63,7 @@ public class RecordShopServiceImpl implements RecordShopService {
         if (recordShopRepository.existsById(albumID)) {
             recordShopRepository.deleteById(albumID);
         } else {
-            throw new NoSuchElementException();
+            throw new AlbumNotFoundException("Unable to delete. There is not an album with that ID.");
         }
     }
 
@@ -77,7 +78,7 @@ public class RecordShopServiceImpl implements RecordShopService {
             albumList.addAll(recordShopRepository.findByGenre(genre));
         }
         if(albumList.isEmpty()){
-            throw new NoSuchElementException("There are no matching albums.");
+            throw new AlbumNotFoundException("There are no matching albums.");
         }
         return albumList;
     }
