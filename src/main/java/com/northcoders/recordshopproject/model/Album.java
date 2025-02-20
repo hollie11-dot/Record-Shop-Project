@@ -93,7 +93,7 @@ public class Album {
         this.artist = artist;
     }
 
-    public void setDateReleased(int dateReleased) {
+    public void setDateReleased(Integer dateReleased) {
         this.dateReleased = dateReleased;
     }
 

@@ -5,17 +5,13 @@ import com.northcoders.recordshopproject.exceptionhandling.InvalidInputsExceptio
 import com.northcoders.recordshopproject.model.Album;
 import com.northcoders.recordshopproject.model.Genre;
 import com.northcoders.recordshopproject.repository.RecordShopRepository;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class RecordShopServiceImpl implements RecordShopService {
@@ -41,21 +37,28 @@ public class RecordShopServiceImpl implements RecordShopService {
     @Override
     @Cacheable("albums")
     public Album getAlbumById(Long albumID) {
-        return recordShopRepository.findById(albumID)
-                .orElseThrow(NoSuchElementException::new);
-    }
+        Album albumFound = recordShopRepository.findById(albumID)
+                .orElseThrow(() -> new AlbumNotFoundException("There is not an album with that ID. Please try again."));
+                return albumFound;
+        }
 
     @Override
     @CacheEvict(cacheNames = "albums", key = "#albumID")
     public Album updateAlbum(Album album, Long albumID) {
-        Album albumToUpdate = recordShopRepository.findById(albumID).get();
-        albumToUpdate.setTitle(album.getTitle());
-        albumToUpdate.setGenre(album.getGenre());
-        albumToUpdate.setArtist(album.getArtist());
-        albumToUpdate.setDateReleased(album.getDateReleased());
-        albumToUpdate.setPrice(album.getPrice());
-        albumToUpdate.setStock(album.getStock());
-        return recordShopRepository.save(albumToUpdate);
+        if(!recordShopRepository.existsById(albumID)){
+            throw new AlbumNotFoundException("There is not an album with that ID. Please try again.");
+        }
+        if(album.getArtist() != null && album.getTitle() != null && album.getGenre() != null && album.getDateReleased() != null && album.getPrice() != null && album.getStock() != null) {
+            Album albumToUpdate = recordShopRepository.findById(albumID).get();
+            albumToUpdate.setTitle(album.getTitle());
+            albumToUpdate.setGenre(album.getGenre());
+            albumToUpdate.setArtist(album.getArtist());
+            albumToUpdate.setDateReleased(album.getDateReleased());
+            albumToUpdate.setPrice(album.getPrice());
+            albumToUpdate.setStock(album.getStock());
+            return recordShopRepository.save(albumToUpdate);
+        }
+        throw new InvalidInputsException("One ore more incorrect inputs. Please try again.");
     }
 
     @Override
