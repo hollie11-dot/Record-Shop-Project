@@ -1,6 +1,7 @@
 package com.northcoders.recordshopproject.model;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 @Entity
 public class Album {
@@ -9,23 +10,23 @@ public class Album {
     @Column(updatable = false, nullable = false)
     private Long id;
 
-    @Column
+    @Column (nullable = false)
     private String title;
 
-    @Column
+    @Column (nullable = false)
     private Genre genre;
 
-    @Column
+    @Column (nullable = false)
     private String artist;
 
-    @Column(name = "release_year")
-    private int dateReleased;
+    @Column(name = "release_year", nullable = false)
+    private Integer dateReleased;
 
-    @Column
-    private double price;
+    @Column (nullable = false)
+    private Double price;
 
-    @Column
-    private int stock;
+    @Column (nullable = false)
+    private Integer stock;
 
     public Album(){}
 
@@ -64,15 +65,15 @@ public class Album {
         return artist;
     }
 
-    public int getDateReleased() {
+    public Integer getDateReleased() {
         return dateReleased;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
@@ -96,11 +97,11 @@ public class Album {
         this.dateReleased = dateReleased;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 }

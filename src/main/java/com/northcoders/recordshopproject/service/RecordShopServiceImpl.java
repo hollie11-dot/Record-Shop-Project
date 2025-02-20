@@ -1,8 +1,10 @@
 package com.northcoders.recordshopproject.service;
 
+import com.northcoders.recordshopproject.exceptionhandling.InvalidInputsException;
 import com.northcoders.recordshopproject.model.Album;
 import com.northcoders.recordshopproject.model.Genre;
 import com.northcoders.recordshopproject.repository.RecordShopRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -29,7 +31,10 @@ public class RecordShopServiceImpl implements RecordShopService {
 
     @Override
     public Album addAlbum(Album album) {
-        return recordShopRepository.save(album);
+        if(album.getArtist() != null && album.getTitle() != null && album.getGenre() != null && album.getDateReleased() != null && album.getPrice() != null && album.getStock() != null) {
+            return recordShopRepository.save(album);
+        }
+        throw new InvalidInputsException("One ore more incorrect inputs. Please try again.");
     }
 
     @Override
@@ -72,7 +77,7 @@ public class RecordShopServiceImpl implements RecordShopService {
             albumList.addAll(recordShopRepository.findByGenre(genre));
         }
         if(albumList.isEmpty()){
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("There are no matching albums.");
         }
         return albumList;
     }
