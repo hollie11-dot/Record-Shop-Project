@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/recordshop")
+@RequestMapping("/api/v1/albums")
 public class RecordShopController {
 
     @Autowired
