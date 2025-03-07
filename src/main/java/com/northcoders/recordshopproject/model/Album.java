@@ -28,18 +28,22 @@ public class Album {
     @Column (nullable = false)
     private Integer stock;
 
+    @Column
+    private String albumurl;
+
     public Album(){}
 
-    public Album(String title, Genre genre, String artist, int dateReleased, double price, int stock) {
+    public Album(String title, Genre genre, String artist, int dateReleased, double price, int stock, String albumurl) {
         this.title = title;
         this.genre = genre;
         this.artist = artist;
         this.dateReleased = dateReleased;
         this.price = price;
         this.stock = stock;
+        this.albumurl = albumurl;
     }
 
-    public Album(Long id, String title, Genre genre, String artist, int dateReleased, double price, int stock) {
+    public Album(Long id, String title, Genre genre, String artist, int dateReleased, double price, int stock, String albumurl) {
         this.id = id;
         this.title = title;
         this.genre = genre;
@@ -47,6 +51,7 @@ public class Album {
         this.dateReleased = dateReleased;
         this.price = price;
         this.stock = stock;
+        this.albumurl = albumurl;
     }
 
     public Long getId() {
@@ -77,6 +82,10 @@ public class Album {
         return stock;
     }
 
+    public String getAlbumurl() {
+        return albumurl;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -103,5 +112,9 @@ public class Album {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public void setAlbumurl(String albumurl) {
+        this.albumurl = albumurl;
     }
 }
