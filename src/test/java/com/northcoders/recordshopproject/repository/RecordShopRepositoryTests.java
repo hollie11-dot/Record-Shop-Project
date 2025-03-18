@@ -26,7 +26,7 @@ public class RecordShopRepositoryTests {
 
     @BeforeEach
     public void setUpAlbum() {
-        testAlbum = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 100);
+        testAlbum = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 100, null);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class RecordShopRepositoryTests {
     @Test
     @DisplayName("recordShopRepository.findAll() method returns all Albums ")
     public void testRecordShopRepositoryFindAllMethod(){
-        Album testAlbum2 = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19);
+        Album testAlbum2 = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19, null);
         recordShopRepository.save(testAlbum);
         recordShopRepository.save(testAlbum2);
         List<Album> allAlbums = (List<Album>) recordShopRepository.findAll();

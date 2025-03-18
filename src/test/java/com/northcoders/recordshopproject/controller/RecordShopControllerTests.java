@@ -60,8 +60,8 @@ public class RecordShopControllerTests {
     public void testGetAllAlbums() throws Exception {
         List<Album> testAlbums = new ArrayList<>();
 
-        Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100);
-        Album albumTwo = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19);
+        Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100, null);
+        Album albumTwo = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19, null);
 
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
@@ -69,7 +69,7 @@ public class RecordShopControllerTests {
         when(recordShopService.getAllAlbums()).thenReturn(testAlbums);
 
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.get("/api/v1/recordshop"))
+                        MockMvcRequestBuilders.get("/api/v1/albums"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].title").value("Nevermind"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].artist").value("Nirvana"))
@@ -84,12 +84,12 @@ public class RecordShopControllerTests {
     @Test
     @DisplayName("Returns posted album when receives a post request")
     public void testAddAlbum() throws Exception {
-        Album albumOne = new Album("Teenage Dream", Genre.POP, "Katy Perry", 2010, 20, 49);
+        Album albumOne = new Album("Teenage Dream", Genre.POP, "Katy Perry", 2010, 20, 49, null);
 
         when(recordShopService.addAlbum(any(Album.class))).thenReturn(albumOne);
 
         this.mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/v1/recordshop")
+                        MockMvcRequestBuilders.post("/api/v1/albums")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(mapper.writeValueAsString(albumOne)))
                 .andExpect(status().isCreated())
@@ -107,7 +107,7 @@ public class RecordShopControllerTests {
     @DisplayName("Returns album details when passed an albumID")
     public void testGetAlbum() throws Exception {
 
-        Album expectedAlbum = new Album(1L, "AlbumOne", Genre.ROCK, "ArtistTwo", 1995, 15, 100);
+        Album expectedAlbum = new Album(1L, "AlbumOne", Genre.ROCK, "ArtistTwo", 1995, 15, 100, null);
 
         when(recordShopService.getAlbumById(1L)).thenReturn(expectedAlbum);
 
@@ -121,9 +121,9 @@ public class RecordShopControllerTests {
     @DisplayName("Updates an album when passed an ID and Album details")
     public void testUpdateAlbum() throws Exception {
 
-        Album existingAlbum = new Album(1L, "Nevermind", Genre.POP, "Nirvana", 1995, 15, 100);
+        Album existingAlbum = new Album(1L, "Nevermind", Genre.POP, "Nirvana", 1995, 15, 100, null);
 
-        Album updatedAlbum = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 100);
+        Album updatedAlbum = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 100, null);
 
         when(recordShopService.updateAlbum(updatedAlbum, existingAlbum.getId())).thenReturn(updatedAlbum);
 
@@ -141,7 +141,7 @@ public class RecordShopControllerTests {
      doNothing().when(recordShopService).deleteAlbum(1L);
 
      this.mockMvc.perform(
-             MockMvcRequestBuilders.delete("/api/v1/recordshop/1"))
+             MockMvcRequestBuilders.delete("/api/v1/albums/1"))
                 .andExpect(status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().string("Album at ID 1 has been successfully deleted"));
 
@@ -153,8 +153,8 @@ public class RecordShopControllerTests {
     public void testFilterALbumsWithArtist() throws Exception {
         List<Album> testAlbums = new ArrayList<>();
 
-        Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100);
-        Album albumTwo = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19);
+        Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100, null);
+        Album albumTwo = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19, null);
 
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
@@ -172,8 +172,8 @@ public class RecordShopControllerTests {
     public void testFilterAlbumsWithReleaseYear() throws Exception {
         List<Album> testAlbums = new ArrayList<>();
 
-        Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100);
-        Album albumTwo = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19);
+        Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100, null);
+        Album albumTwo = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19, null);
 
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);
@@ -191,8 +191,8 @@ public class RecordShopControllerTests {
     public void testFilterAlbumsWithGenre() throws Exception {
         List<Album> testAlbums = new ArrayList<>();
 
-        Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100);
-        Album albumTwo = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19);
+        Album albumOne = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 10, 100, null);
+        Album albumTwo = new Album("Kind of Blue", Genre.JAZZ, "Miles Davis", 1959, 5, 19, null);
 
         testAlbums.add(albumOne);
         testAlbums.add(albumTwo);

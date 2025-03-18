@@ -37,9 +37,9 @@ public class RecordShopServiceTests {
     public void testGetAllAlbums(){
 
         List<Album> albums = new ArrayList<>();
-        albums.add(new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40));
-        albums.add(new Album("Alum Two", Genre.DANCE, "Artist Two", 2000, 15, 50));
-        albums.add(new Album("Alum Three", Genre.DANCE, "Artist Three", 1952, 30, 10));
+        albums.add(new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40, null));
+        albums.add(new Album("Alum Two", Genre.DANCE, "Artist Two", 2000, 15, 50, null));
+        albums.add(new Album("Alum Three", Genre.DANCE, "Artist Three", 1952, 30, 10, null));
 
         when(mockRecordShopRepository.findAll()).thenReturn(albums);
 
@@ -52,7 +52,7 @@ public class RecordShopServiceTests {
     @Test
     @DisplayName("addAlbum() adds an album")
     public void testAddAlbum(){
-        Album album = new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40);
+        Album album = new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40, null);
 
         when(mockRecordShopRepository.save(album)).thenReturn(album);
 
@@ -64,7 +64,7 @@ public class RecordShopServiceTests {
     @Test
     @DisplayName("getAlbumByID returns an album corresponding to passed ID")
     public void testGetAlbumByID(){
-        Album album = new Album(4L, "Alum One", Genre.DANCE, "Artist One", 2020, 11, 40);
+        Album album = new Album(4L, "Alum One", Genre.DANCE, "Artist One", 2020, 11, 40, null);
 
         Long id = 4L;
 
@@ -78,9 +78,9 @@ public class RecordShopServiceTests {
     @Test
     @DisplayName("updateAlbum returns an updated album when passed an albumID and an Album")
     public void testUpdateAlbum(){
-        Album existingAlbum = new Album(1L, "Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 101);
+        Album existingAlbum = new Album(1L, "Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 101, null);
         when(mockRecordShopRepository.existsById(1L)).thenReturn(true);
-        Album updatedAlbum = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 100);
+        Album updatedAlbum = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 100, null);
         updatedAlbum.setId(1L);
 
         when(mockRecordShopRepository.findById(1L)).thenReturn(Optional.of(existingAlbum));
@@ -115,9 +115,9 @@ public class RecordShopServiceTests {
     public void testFilterAlbumsByArtist(){
 
         List<Album> albums = new ArrayList<>();
-        Album albumOne = new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40);
-        Album albumTwo = new Album("Alum Two", Genre.DANCE, "Artist One", 2000, 15, 50);
-        Album albumThree = new Album("Alum Three", Genre.DANCE, "Artist Two", 1952, 30, 10);
+        Album albumOne = new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40, null);
+        Album albumTwo = new Album("Alum Two", Genre.DANCE, "Artist One", 2000, 15, 50, null);
+        Album albumThree = new Album("Alum Three", Genre.DANCE, "Artist Two", 1952, 30, 10, null);
 
         albums.add(albumOne);
         albums.add(albumTwo);
@@ -136,9 +136,9 @@ public class RecordShopServiceTests {
     public void testFilterAlbumsByReleaseYear(){
 
         List<Album> albums = new ArrayList<>();
-        Album albumOne = new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40);
-        Album albumTwo = new Album("Alum Two", Genre.DANCE, "Artist Two", 2020, 15, 50);
-        Album albumThree = new Album("Alum Three", Genre.DANCE, "Artist Three", 1952, 30, 10);
+        Album albumOne = new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40, null);
+        Album albumTwo = new Album("Alum Two", Genre.DANCE, "Artist Two", 2020, 15, 50, null);
+        Album albumThree = new Album("Alum Three", Genre.DANCE, "Artist Three", 1952, 30, 10, null);
 
         albums.add(albumOne);
         albums.add(albumTwo);
@@ -157,9 +157,9 @@ public class RecordShopServiceTests {
     public void testFilterAlbumsByGenre(){
 
         List<Album> albums = new ArrayList<>();
-        Album albumOne = new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40);
-        Album albumTwo = new Album("Alum Two", Genre.DANCE, "Artist Two", 2020, 15, 50);
-        Album albumThree = new Album("Alum Three", Genre.POP, "Artist Three", 1952, 30, 10);
+        Album albumOne = new Album("Alum One", Genre.DANCE, "Artist One", 2020, 11, 40, null);
+        Album albumTwo = new Album("Alum Two", Genre.DANCE, "Artist Two", 2020, 15, 50, null);
+        Album albumThree = new Album("Alum Three", Genre.POP, "Artist Three", 1952, 30, 10, null);
 
         albums.add(albumOne);
         albums.add(albumTwo);
@@ -176,7 +176,7 @@ public class RecordShopServiceTests {
     @Test
     @DisplayName("addAlbum method throws an exception when passed null values")
     public void testAddAlbumThrowsException(){
-        Album album = new Album(null, Genre.DANCE, "Artist One", 2020, 11, 40);
+        Album album = new Album(null, Genre.DANCE, "Artist One", 2020, 11, 40, null);
 
         when(mockRecordShopRepository.save(album)).thenReturn(album);
 
@@ -197,9 +197,9 @@ public class RecordShopServiceTests {
     @Test
     @DisplayName("updateAlbum throws an exception when passed an incorrect album")
     public void testUpdateAlbumThrowsExceptionWithInvalidInput(){
-        Album existingAlbum = new Album(1L, "Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 101);
+        Album existingAlbum = new Album(1L, "Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 101, null);
         when(mockRecordShopRepository.existsById(1L)).thenReturn(true);
-        Album updatedAlbum = new Album(null, Genre.ROCK, "Nirvana", 1991, 15, 100);
+        Album updatedAlbum = new Album(null, Genre.ROCK, "Nirvana", 1991, 15, 100, null);
         updatedAlbum.setId(1L);
 
         when(mockRecordShopRepository.findById(1L)).thenReturn(Optional.of(existingAlbum));
@@ -214,7 +214,7 @@ public class RecordShopServiceTests {
     @DisplayName("updateAlbum throws an exception when passed an invalid ID")
     public void testUpdateAlbumThrowsExceptionWithInvalidID(){
         when(mockRecordShopRepository.existsById(1L)).thenReturn(false);
-        Album updatedAlbum = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 100);
+        Album updatedAlbum = new Album("Nevermind", Genre.ROCK, "Nirvana", 1991, 15, 100, null);
         updatedAlbum.setId(1L);
 
         doThrow(new AlbumNotFoundException("There is not an album with that ID. Please try again.")).when(mockRecordShopRepository).findById(1L);
